@@ -20,3 +20,14 @@
     display: none;
 }
 
+#outer-boarder{
+    border: 1px solid black;
+    width:  580px;
+    height: 580px;
+    position:absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
