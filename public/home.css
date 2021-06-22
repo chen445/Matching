@@ -11,3 +11,12 @@
     height: 60px;
     width: 60px;
 }
+
+#score-board{
+    display: none;
+}
+
+#pop-up{
+    display: none;
+}
+

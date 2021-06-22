@@ -1,5 +1,4 @@
 
-
 document.addEventListener('DOMContentLoaded',()=>{
 
     const startGameButton = document.getElementById("start-game-btn");
@@ -7,16 +6,21 @@ document.addEventListener('DOMContentLoaded',()=>{
         document.getElementById("welcome").style.display = "none";
         startGame();
         document.getElementById("board").style.display = "flex";
+        document.getElementById("score-board").style.display="block"
     });
 
     function startGame() {
       const board = document.getElementById("board");
+      const displayScore= document.getElementById('score')
       const dimension = 8;
       const squares = [];
       let score = 0;
+      const staringtime = 1;
+      let time = staringtime*60;
+      const countDown = document.getElementById("countdown")
+      const popUp= document.getElementById("pop-up-content")
+      const endGame= document.getElementById("end-game")
       const Colors = ["red", "yellow", "orange", "purple", "green", "blue"];
-
-      images = ["url-to-image1"];
 
       let gridIdtoColor = {
         0: 0,
@@ -25,7 +29,27 @@ document.addEventListener('DOMContentLoaded',()=>{
         3: 0,
       };
 
-      
+      let updateTimeId= setInterval(updateTime, 1000)
+      function updateTime(){
+          time-- 
+          const minutes = Math.floor(time / 60);
+          let seconds = time % 60;
+          seconds = seconds < 10 ? '0' + seconds: seconds;
+          countDown.innerHTML=`${minutes}: ${seconds}`
+          if(time === 0){
+            clearInterval(updateTimeId);
+              document.getElementById("pop-up").style.display ="block"
+              popUp.innerHTML=`You failed Score: ${score}`
+              endGame.addEventListener("click", (e)=>{
+                   document.getElementById("welcome").style.display = "block";
+                   document.getElementById("board").style.display = "none";
+                   document.getElementById("score-board").style.display =
+                     "none";
+                   document.getElementById("pop-up").style.display="none";
+                   document.getElementById('countdown').style.display="none"
+              })
+          }
+      }
 
       function createBoard() {
         for (let i = 0; i < dimension * dimension; i++) {
@@ -61,9 +85,9 @@ document.addEventListener('DOMContentLoaded',()=>{
                     }
                 }
             }
-            debugger
             if (dfs(node, target, newBoard)){
                 score += 4;
+                displayScore.innerHTML = score
                 squares[prev[1]].style.backgroundColor = "";
                 e.target.style.backgroundColor = "";
             }
@@ -75,7 +99,7 @@ document.addEventListener('DOMContentLoaded',()=>{
       }
     }
    
-})
+}) 
 
 function dfs(node, target, board, visited=[]){
     if (visited.includes(node)){
@@ -94,9 +118,9 @@ function dfs(node, target, board, visited=[]){
                     ]
     
     for(let i=0; i< neighbors.length; i++){
-        let neighborId=neighbors[i][0]*board.length+neighbors[i][1]
         let x = neighbors[i][0]
         let y = neighbors[i][1]
+        let neighborId=x*board.length+y
         if (
           x < board.length &&
           x >= 0 &&
