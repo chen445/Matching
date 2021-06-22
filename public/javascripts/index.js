@@ -48,10 +48,10 @@ document.addEventListener('DOMContentLoaded',()=>{
         let id = e.target.id;
         if (prev !== null) {
           if (prev[0] === gridIdtoColor[id]) {
-            let prevPostion = [Math.floor(prev[0]/dimension), prev[0]%dimension]
+            let prevPostion = [Math.floor(prev[1]/dimension), prev[1]%dimension]
             let currentPosition = [Math.floor(id/dimension), id%dimension]
-            let node = (prevPostion[0]+1)*(dimension+2)+(prevPostion[1]);
-            let target =(currentPosition[0]+1)*(dimension+2)+(currentPosition[1]);
+            let node = (prevPostion[0]+1)*(dimension+2)+(prevPostion[1]+1);
+            let target =(currentPosition[0]+1)*(dimension+2)+(currentPosition[1]+1);
             let newBoard = Array(dimension+2).fill(null).map(() => Array(dimension+2).fill(0))
             for(let i =0; i < dimension; i++){
                 for( let j = 0; j< dimension; j++){
