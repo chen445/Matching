@@ -1,0 +1,114 @@
+
+
+document.addEventListener('DOMContentLoaded',()=>{
+
+    const startGameButton = document.getElementById("start-game-btn");
+    startGameButton.addEventListener("click", (event)=> {
+        document.getElementById("welcome").style.display = "none";
+        startGame();
+        document.getElementById("board").style.display = "flex";
+    });
+
+    function startGame() {
+      const board = document.getElementById("board");
+      const dimension = 8;
+      const squares = [];
+      let score = 0;
+      const Colors = ["red", "yellow", "orange", "purple", "green", "blue"];
+
+      images = ["url-to-image1"];
+
+      let gridIdtoColor = {
+        0: 0,
+        1: 1,
+        2: 1,
+        3: 0,
+      };
+
+      
+
+      function createBoard() {
+        for (let i = 0; i < dimension * dimension; i++) {
+          const square = document.createElement("div");
+          square.setAttribute("id", i);
+          let randomColor = Math.floor(Math.random() * Colors.length);
+          gridIdtoColor[i] = randomColor;
+          square.style.backgroundColor = Colors[randomColor];
+          board.appendChild(square);
+          squares.push(square);
+        }
+      }
+
+      createBoard();
+
+      squares.forEach((square) => square.addEventListener("click", matchPrev));
+      let prev = null;
+      function matchPrev(e) {
+        e.preventDefault();
+        let id = e.target.id;
+        if (prev !== null) {
+          if (prev[0] === gridIdtoColor[id]) {
+            let prevPostion = [Math.floor(prev[0]/dimension), prev[0]%dimension]
+            let currentPosition = [Math.floor(id/dimension), id%dimension]
+            let node = (prevPostion[0]+1)*(dimension+2)+(prevPostion[1]);
+            let target =(currentPosition[0]+1)*(dimension+2)+(currentPosition[1]);
+            let newBoard = Array(dimension+2).fill(null).map(() => Array(dimension+2).fill(0))
+            for(let i =0; i < dimension; i++){
+                for( let j = 0; j< dimension; j++){
+                    let square= squares[i*dimension+j]
+                    if (square.style.backgroundColor!==""){
+                        newBoard[i+1][j+1] = 1
+                    }
+                }
+            }
+            debugger
+            if (dfs(node, target, newBoard)){
+                score += 4;
+                squares[prev[1]].style.backgroundColor = "";
+                e.target.style.backgroundColor = "";
+            }
+          }
+          prev = null;
+        } else {
+          prev = [gridIdtoColor[id], id];
+        }
+      }
+    }
+   
+})
+
+function dfs(node, target, board, visited=[]){
+    if (visited.includes(node)){
+        return false;
+    }
+    if(node === target){
+        return true;
+    }
+    visited.push(node)
+    
+    let position = [Math.floor(node/board.length),node%board.length]
+    let neighbors = [[position[0]+1, position[1]], 
+                    [position[0], position[1]+1],
+                    [position[0]-1, position[1]],
+                    [position[0], position[1]-1]
+                    ]
+    
+    for(let i=0; i< neighbors.length; i++){
+        let neighborId=neighbors[i][0]*board.length+neighbors[i][1]
+        let x = neighbors[i][0]
+        let y = neighbors[i][1]
+        if (
+          x < board.length &&
+          x >= 0 &&
+          y < board.length &&
+          y >= 0 &&
+          (board[x][y] === 0 || neighborId === target)
+        ) {
+          if (dfs(neighborId, target, board, visited)) {
+            return true;
+          }
+        }
+    }
+    return false;
+}
+

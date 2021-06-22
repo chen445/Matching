@@ -1,0 +1,13 @@
+#board {
+    height: 480px;
+    width: 480px;
+    display: flex;
+    flex-wrap: wrap;
+    background-color:white;
+    display: none;
+}
+
+#board div{
+    height: 60px;
+    width: 60px;
+}
