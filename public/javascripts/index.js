@@ -117,12 +117,23 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-function dfs(node, target, board, visited = []) {
+function dfs(
+  node,
+  target,
+  board,
+  visited = [],
+  prevPosition = null,
+  counter = 0
+) {
   if (visited.includes(node)) {
     return false;
   }
   if (node === target) {
     return true;
+  }
+
+  if (counter >= 2) {
+    return false;
   }
   visited.push(node);
 
@@ -133,7 +144,6 @@ function dfs(node, target, board, visited = []) {
     [position[0] - 1, position[1]],
     [position[0], position[1] - 1],
   ];
-
   for (let i = 0; i < neighbors.length; i++) {
     let x = neighbors[i][0];
     let y = neighbors[i][1];
@@ -145,8 +155,19 @@ function dfs(node, target, board, visited = []) {
       y >= 0 &&
       (board[x][y] === 0 || neighborId === target)
     ) {
-      if (dfs(neighborId, target, board, visited)) {
-        return true;
+      //determine whether if there is a turn
+      if (
+        prevPosition !== null &&
+        prevPosition[0] - x !== 0 &&
+        prevPosition[1] - y !== 0
+      ) {
+        if (dfs(neighborId, target, board, visited, position, counter + 1)) {
+          return true;
+        }
+      } else {
+        if (dfs(neighborId, target, board, visited, position, counter)) {
+          return true;
+        }
       }
     }
   }
