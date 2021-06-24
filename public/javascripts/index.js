@@ -240,9 +240,9 @@ function dfs(
     return true;
   }
 
-//   if (counter >= 3) {
-//     return false;
-//   }
+  if (counter >= 2) {
+    return false;
+  }
   visited.push(node);
 
   let position = [Math.floor(node / board.length), node % board.length];
@@ -270,14 +270,17 @@ function dfs(
         prevPosition[1] - y !== 0
       ) {
         if (dfs(neighborId, target, board, visited, position, counter + 1)) {
+            visited.pop()
           return true;
         }
       } else {
         if (dfs(neighborId, target, board, visited, position, counter)) {
+            visited.pop();
           return true;
         }
       }
     }
   }
+  visited.pop();
   return false;
 }
