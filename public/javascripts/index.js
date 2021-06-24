@@ -1,21 +1,97 @@
+
+class SoundManager {
+    constructor() {
+        this.clickSound = new Audio("./sounds/clicksound.wav");
+        this.connectSuccess = new Audio("./sounds/connect.mp3");
+        this.win = new Audio("./sounds/winning.mp3");
+        this.fail = new Audio('./sounds/fail.mp3');
+        this.background= new Audio("./sounds/backgroundmusic.mp3")
+    }
+    
+    playClick() {
+        this.clickSound.currentTime = 0;
+        this.clickSound.volume = 0.3;
+        this.clickSound.play();
+    }
+
+    playConnect(){ 
+        this.connectSuccess.currentTime = 0;
+        this.connectSuccess.volume = 0.3;
+        this.connectSuccess.play();
+    }
+
+    playSuccess(){
+        this.win.currentTime = 0;
+        this.win.volume = 0.3;
+        this.win.play()
+    }
+    playbackground(){
+        this.background.loop = true
+        this.background.play()
+    }
+    pauseBackground(){
+        this.background.pause();
+        this.background.currentTime = 0;
+    }
+
+    playfail(){
+         this.fail.currentTime = 0;
+         this.fail.volume = 0.3;
+         this.fail.play()
+    }
+
+    toggleMute(){
+        this.win.muted = !this.win.muted;
+        this.background.muted = !this.background.muted;
+        this.fail.muted = !this.fail.muted;
+        this.connectSuccess.muted = !this.connectSuccess.muted;
+        this.clickSound.muted = !this.clickSound.mutedd;
+        if (this.background.muted) {
+            document.getElementById("audioButton").innerHTML = "Audio On";
+        } else {
+            document.getElementById("audioButton").innerHTML = "Audio Off";
+        }
+    }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+    let soundManager = new SoundManager();
   const startGameButton = document.getElementById("start-game-btn");
+
   startGameButton.addEventListener("click", (event) => {
+    soundManager.playClick();
+    soundManager.playbackground();
     document.getElementById("welcome").style.display = "none";
     startGame();
     document.getElementById("board").style.display = "flex";
     document.getElementById("score-board").style.display = "block";
+    document.getElementById("countdown").style.display="block"
   });
+
+  document.getElementById("audioButton").addEventListener("click", (event) => {
+    soundManager.toggleMute();
+  })
+
+  function shuffle(arr){
+    for(i=arr.length-1; i> 0; i--){
+        let randomNum=Math.floor(Math.random() *(i+1));
+        let temp = arr[i];
+        arr[i] = arr[randomNum];
+        arr[randomNum] = temp; 
+    }
+    return arr
+  }
 
   const endGame = document.getElementById("end-game");
   endGame.addEventListener("click", (e) => {
+    soundManager.playClick();
+    soundManager.pauseBackground();
     document.getElementById("welcome").style.display = "block";
     document.getElementById("board").style.display = "none";
     document.getElementById("score-board").style.display = "none";
     document.getElementById("pop-up").style.display = "none";
     document.getElementById("countdown").style.display = "none";
   });
-
   function startGame() {
     const board = document.getElementById("board");
     const displayScore = document.getElementById("score");
@@ -27,20 +103,33 @@ document.addEventListener("DOMContentLoaded", () => {
     const countDown = document.getElementById("countdown");
     const popUp = document.getElementById("pop-up-content");
 
-    const Colors = ["red", "yellow", "orange", "purple", "green", "blue"];
+    const images = [
+      "url(./images/img1.png)",
+      "url(./images/img2.png)",
+      "url(./images/img3.png)",
+      "url(./images/img4.png)",
+      "url(./images/img5.png)",
+      "url(./images/img6.png)",
+      "url(./images/img7.png)",
+      "url(./images/img8.png)",
+      "url(./images/img9.png)",
+      "url(./images/img10.png)",
+      "url(./images/img11.png)",
+      "url(./images/img12.png)",
+      "url(./images/img13.png)",
+      "url(./images/img14.png)",
+      "url(./images/img15.png)",
+      "url(./images/img16.png)",
+    ];
 
     // Reset state
     countDown.innerHTML = "";
     popUp.innerHTML = "";
     board.innerHTML = "";
     displayScore.innerHTML = "";
+   
 
-    let gridIdtoColor = {
-      0: 0,
-      1: 1,
-      2: 1,
-      3: 0,
-    };
+    let gridIdtoImg = { }
 
     let updateTimeId = setInterval(updateTime, 1000);
     function updateTime() {
@@ -50,33 +139,44 @@ document.addEventListener("DOMContentLoaded", () => {
       seconds = seconds < 10 ? "0" + seconds : seconds;
       countDown.innerHTML = `${minutes}: ${seconds}`;
       if (time === 0) {
+        soundManager.playfail();
         clearInterval(updateTimeId);
         document.getElementById("pop-up").style.display = "block";
         popUp.innerHTML = `You failed Score: ${score}`;
       }
     }
+    function createImg(images){
+        let newImages = [];
+        while(newImages.length < dimension * dimension){
+         let randomImg = Math.floor(Math.random() * images.length);
+          newImages.push(images[randomImg])
+          newImages.push(images[randomImg]);
+        }
+        return newImages
+    }
 
+    let newImages = shuffle(createImg(images));
+    
     function createBoard() {
       for (let i = 0; i < dimension * dimension; i++) {
         const square = document.createElement("div");
         square.setAttribute("id", i);
-        let randomColor = Math.floor(Math.random() * Colors.length);
-        gridIdtoColor[i] = randomColor;
-        square.style.backgroundColor = Colors[randomColor];
+        gridIdtoImg[i] = newImages[i];
+        square.style.backgroundImage = newImages[i];
         board.appendChild(square);
         squares.push(square);
       }
     }
 
     createBoard();
-
     squares.forEach((square) => square.addEventListener("click", matchPrev));
     let prev = null;
     function matchPrev(e) {
       e.preventDefault();
+      soundManager.playClick();
       let id = e.target.id;
       if (prev !== null) {
-        if (prev[0] === gridIdtoColor[id]) {
+        if (prev[0] === gridIdtoImg[id]) {
           let prevPostion = [
             Math.floor(prev[1] / dimension),
             prev[1] % dimension,
@@ -93,7 +193,7 @@ document.addEventListener("DOMContentLoaded", () => {
           for (let i = 0; i < dimension; i++) {
             for (let j = 0; j < dimension; j++) {
               let square = squares[i * dimension + j];
-              if (square.style.backgroundColor !== "") {
+              if (square.style.backgroundImage !== "") {
                 newBoard[i + 1][j + 1] = 1;
               }
             }
@@ -101,17 +201,25 @@ document.addEventListener("DOMContentLoaded", () => {
           if (node !== target && dfs(node, target, newBoard)) {
             score += 4;
             displayScore.innerHTML = score;
-            squares[prev[1]].style.backgroundColor = "";
-            e.target.style.backgroundColor = "";
-            if (squares.every((e) => e.style.backgroundColor === "")) {
+            squares[prev[1]].style.backgroundImage = "";
+            e.target.style.backgroundImage = "";
+            soundManager.playConnect();
+            if (squares.every((e) => e.style.backgroundImage === "")) {
+              soundManager.playSuccess();
               document.getElementById("pop-up").style.display = "block";
+              clearInterval(updateTimeId);
               popUp.innerHTML = `You won the game! Score: ${score}`;
             }
           }
         }
+        const square = document.getElementById(prev[1]);
+        square.classList.remove("square-with-board");
         prev = null;
       } else {
-        prev = [gridIdtoColor[id], id];
+        if (e.target.style.backgroundImage !== "") {
+          e.target.classList.add("square-with-board");
+          prev = [gridIdtoImg[id], id];
+        }
       }
     }
   }
@@ -132,9 +240,9 @@ function dfs(
     return true;
   }
 
-  if (counter >= 2) {
-    return false;
-  }
+//   if (counter >= 3) {
+//     return false;
+//   }
   visited.push(node);
 
   let position = [Math.floor(node / board.length), node % board.length];

@@ -10,6 +10,15 @@
 #board div{
     height: 60px;
     width: 60px;
+    cursor: pointer;
+    background-size: 50px;
+    background-repeat:no-repeat;
+    background-position: center;
+}
+
+.square-with-board {
+    box-sizing: border-box;
+     border: 1px solid black;
 }
 
 #score-board{
@@ -30,4 +39,8 @@
     left: 0;
     right: 0;
     margin: auto;
+}
+
+button{
+    cursor: pointer;
 }
