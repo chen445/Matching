@@ -47,9 +47,10 @@ class SoundManager {
         this.connectSuccess.muted = !this.connectSuccess.muted;
         this.clickSound.muted = !this.clickSound.mutedd;
         if (this.background.muted) {
-            document.getElementById("audioButton").innerHTML = "Audio On";
+            document.getElementById("audioButton").innerHTML =  '<i class="bi bi-volume-mute-fill"></i>';
         } else {
-            document.getElementById("audioButton").innerHTML = "Audio Off";
+            document.getElementById("audioButton").innerHTML =
+              '<i class="bi bi-volume-up-fill"></i>';
         }
     }
 }
@@ -66,6 +67,8 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("board").style.display = "flex";
     document.getElementById("score-board").style.display = "block";
     document.getElementById("countdown").style.display="block"
+    document.getElementById("audioButton").style.display="block";
+     document.getElementById("happy-face").style.display = "block";
   });
 
   document.getElementById("audioButton").addEventListener("click", (event) => {
@@ -91,6 +94,9 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("score-board").style.display = "none";
     document.getElementById("pop-up").style.display = "none";
     document.getElementById("countdown").style.display = "none";
+    document.getElementById("audioButton").style.display = "none";
+     document.getElementById("happy-face").style.display = "none";
+      document.getElementById("sad-face").style.display = "none";
   });
   function startGame() {
     const board = document.getElementById("board");
@@ -98,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const dimension = 8;
     const squares = [];
     let score = 0;
-    const staringtime = 1;
+    const staringtime = 1.5;
     let time = staringtime * 60;
     const countDown = document.getElementById("countdown");
     const popUp = document.getElementById("pop-up-content");
@@ -126,13 +132,14 @@ document.addEventListener("DOMContentLoaded", () => {
     countDown.innerHTML = "";
     popUp.innerHTML = "";
     board.innerHTML = "";
-    displayScore.innerHTML = "";
+    displayScore.innerHTML = "Score: 0";
    
 
     let gridIdtoImg = { }
 
     let updateTimeId = setInterval(updateTime, 1000);
     function updateTime() {
+
       time--;
       const minutes = Math.floor(time / 60);
       let seconds = time % 60;
@@ -142,7 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
         soundManager.playfail();
         clearInterval(updateTimeId);
         document.getElementById("pop-up").style.display = "block";
-        popUp.innerHTML = `You failed Score: ${score}`;
+        popUp.innerHTML = `<h4>You failed</h4> <br><br><br> <h5>Your Score: ${score} </h5>`;
       }
     }
     function createImg(images){
@@ -200,17 +207,30 @@ document.addEventListener("DOMContentLoaded", () => {
           }
           if (node !== target && dfs(node, target, newBoard)) {
             score += 4;
-            displayScore.innerHTML = score;
+            displayScore.innerHTML = `Score: ${score}`;
             squares[prev[1]].style.backgroundImage = "";
             e.target.style.backgroundImage = "";
             soundManager.playConnect();
+            // display happy face
+            document.getElementById("happy-face").style.display = "block";
+            document.getElementById("sad-face").style.display = "none";
             if (squares.every((e) => e.style.backgroundImage === "")) {
               soundManager.playSuccess();
               document.getElementById("pop-up").style.display = "block";
               clearInterval(updateTimeId);
-              popUp.innerHTML = `You won the game! Score: ${score}`;
+              score += time * 10;
+              displayScore.innerHTML = `Score: ${score}`;
+              popUp.innerHTML = `<div>You won the game!</div> <br><br><br> <h5> Score: ${score}</h5>`;
             }
+          } else {
+            // display sad face
+            document.getElementById("happy-face").style.display = "none";
+            document.getElementById("sad-face").style.display = "block";
           }
+        } else {
+          // display sad face
+          document.getElementById("happy-face").style.display = "none";
+          document.getElementById("sad-face").style.display = "block";
         }
         const square = document.getElementById(prev[1]);
         square.classList.remove("square-with-board");
@@ -236,16 +256,19 @@ function dfs(
   if (visited.includes(node)) {
     return false;
   }
+
+  if (counter >= 3) {
+    return false;
+  }
+  
   if (node === target) {
     return true;
   }
 
-  if (counter >= 2) {
-    return false;
-  }
   visited.push(node);
 
   let position = [Math.floor(node / board.length), node % board.length];
+  console.log(position[0] + "," + position[1]);
   let neighbors = [
     [position[0] + 1, position[1]],
     [position[0], position[1] + 1],
@@ -269,6 +292,7 @@ function dfs(
         prevPosition[0] - x !== 0 &&
         prevPosition[1] - y !== 0
       ) {
+          console.log()
         if (dfs(neighborId, target, board, visited, position, counter + 1)) {
             visited.pop()
           return true;

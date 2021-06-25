@@ -5,28 +5,41 @@
         <title>Matching</title>
         <script type="text/javascript" src="./bundle.js"></script>
         <link rel="stylesheet" href="home.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="reset.css">
     </head>
     <body>
-        <main id='main'>
-            <div id="outer-boarder">
-            <div id ="score-board">
-                <h3>Score</h3>
-                <h1 id="score"></h1>
+        <main id='main' >
+            <h1 >Matching</h1>
+            <div id="game-container">
+                <div id="side-bar">
+                    <div id="audioButton">
+                        <i class="bi bi-volume-up-fill"></i>
+                    </div>
+                    <div id="score-board">
+                        <h2 id="score"></h2>
+                    </div>
+                    <div>
+                        <div id="sad-face"></div>
+                        <div id="happy-face"></div>
+                    </div>
+                    <div id="countdown"></div>
+                </div>
+                <div id="board">
+                </div>
             </div>
-            <div id="countdown"></div>
-            <div id="pop-up">
-                <h3 id="pop-up-content"></h3>
-                <button id="end-game">Return to Main</button>
-            </div>
-            <button id="audioButton">
-                Audio Off
-            </button>
-            <div id="board">
-            </div>
-            <div id="welcome">
-                <button id="start-game-btn">start game</button>
-            </div>
-            </div>
+
+                <div id="pop-up">
+                    <div id="pop-up-info">
+                    <h3 id="pop-up-content"></h3>
+                    <button id="end-game">Return to Main</button>
+                    </div>
+                </div>
+            
+
+                <div id="welcome">
+                    <img id="start-game-btn" src="./images/starbutton.png" alt="">
+                </div>
         </main>
     </body>
 

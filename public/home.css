@@ -3,8 +3,28 @@
     width: 480px;
     display: flex;
     flex-wrap: wrap;
-    background-color:white;
+    background-color: rgba(255,255,255,0.5);
     display: none;
+    top: 15%;
+    bottom: 0;
+    left: 0;
+    right: 0;  
+    border-radius: 5px;
+}
+
+#side-bar {
+    display: flex;
+    flex-direction: column;
+    font-size: 26px;
+    width: 200px;
+}
+
+#main{
+    background: url(./images/backgroundimg.jpg) no-repeat center center/cover;
+    background-size: cover;
+    height: 100vh;
+    
+
 }
 
 #board div{
@@ -23,24 +43,122 @@
 
 #score-board{
     display: none;
+    color:#F2E52E;
+    font-weight: 600;
+     padding-top: 30px;
+     padding-bottom: 30px;
 }
 
-#pop-up{
-    display: none;
+#game-container {
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+     margin-top:8%;
 }
 
-#outer-boarder{
-    border: 1px solid black;
-    width:  580px;
-    height: 580px;
-    position:absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-}
 
 button{
     cursor: pointer;
+}
+
+#audioButton{
+    cursor: pointer;
+    display: none;
+    padding-top: 30px;
+}
+
+#main h1{
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 40px;
+    font-family: 700;
+    color:whitesmoke;
+    padding-top: 30px;
+}
+
+
+#countdown{
+    color: whitesmoke;
+    font-weight: 600;
+     padding-top: 30px;
+}
+
+#welcome{
+    text-align: center;
+}
+
+#start-game-btn{
+    width: 500px;
+    height: 400px;
+    cursor: pointer;
+    margin-top: -50px;
+}
+
+
+#pop-up{
+    display: none;
+    z-index: 1;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+  
+
+#pop-up-info{
+    background-color:lightgoldenrodyellow;
+    border-radius: 10px;
+    margin: 15% auto;
+    padding: 20px;
+    width: 30%;
+    box-shadow: 0 5px 8px 0 rgba(0,0,0,0.2), 0 7px 20px 0 rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+#pop-up-content{
+    padding-bottom: 60px;
+}
+
+#pop-up-content h5{
+    color: #A3D952;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+#pop-up-content h4{
+    font-size: 26px;
+    font-weight: 600;
+}
+
+#pop-up-content div{
+    font-size: 26px;
+    font-weight: 600;
+    color: red;
+}
+
+#sad-face {
+    height: 50px;
+    width: 50px;
+    display: none;
+     background: url(./images/sad.png) no-repeat center center/cover;
+    background-size: cover;
+    
+}
+#happy-face {
+    height: 50px;
+    width: 50px;
+    display: none;
+    background: url(./images/smile.png) no-repeat center center/cover;
+    background-size: cover;
+}
+
+
+ #end-game{  
+    background: #72AE72;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 14px;
 }
