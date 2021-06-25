@@ -99,6 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("audioButton").style.display = "none";
      document.getElementById("happy-face").style.display = "none";
       document.getElementById("sad-face").style.display = "none";
+      document.getElementById("pause").style.display = "none";
   });
   function startGame() {
     const board = document.getElementById("board");
@@ -161,12 +162,14 @@ document.addEventListener("DOMContentLoaded", () => {
          e.preventDefault();
          gamepause =true;
          document.getElementById("pause-pop-up").style.display = "block";
+        soundManager.pauseBackground();
         })
      
         document.getElementById("pop-up-play").addEventListener("click", e=>{
           e.preventDefault();
           gamepause = false;
           document.getElementById("pause-pop-up").style.display = "none";
+          soundManager.playbackground();
     })
     function createImg(images){
         let newImages = [];
