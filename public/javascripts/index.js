@@ -47,10 +47,11 @@ class SoundManager {
         this.connectSuccess.muted = !this.connectSuccess.muted;
         this.clickSound.muted = !this.clickSound.mutedd;
         if (this.background.muted) {
-            document.getElementById("audioButton").innerHTML =  '<i class="bi bi-volume-mute-fill"></i>';
+            document.getElementById("audioButton").innerHTML =
+              '<i class="bi bi-volume-mute-fill" style="font-size: 35px"></i>';
         } else {
             document.getElementById("audioButton").innerHTML =
-              '<i class="bi bi-volume-up-fill"></i>';
+              '<i class="bi bi-volume-up-fill"  style="font-size: 35px"></i>';
         }
     }
 }
@@ -68,7 +69,8 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("score-board").style.display = "block";
     document.getElementById("countdown").style.display="block"
     document.getElementById("audioButton").style.display="block";
-     document.getElementById("happy-face").style.display = "block";
+    document.getElementById("happy-face").style.display = "block";
+    document.getElementById("pause").style.display="block";
   });
 
   document.getElementById("audioButton").addEventListener("click", (event) => {
@@ -133,13 +135,15 @@ document.addEventListener("DOMContentLoaded", () => {
     popUp.innerHTML = "";
     board.innerHTML = "";
     displayScore.innerHTML = "Score: 0";
-   
+    let gamepause = false;
 
     let gridIdtoImg = { }
 
     let updateTimeId = setInterval(updateTime, 1000);
     function updateTime() {
-
+      if (gamepause){
+          return 
+      }
       time--;
       const minutes = Math.floor(time / 60);
       let seconds = time % 60;
@@ -152,6 +156,18 @@ document.addEventListener("DOMContentLoaded", () => {
         popUp.innerHTML = `<h4>You failed</h4> <br><br><br> <h5>Your Score: ${score} </h5>`;
       }
     }
+
+     document.getElementById("pause").addEventListener("click", e=>{
+         e.preventDefault();
+         gamepause =true;
+         document.getElementById("pause-pop-up").style.display = "block";
+        })
+     
+        document.getElementById("pop-up-play").addEventListener("click", e=>{
+          e.preventDefault();
+          gamepause = false;
+          document.getElementById("pause-pop-up").style.display = "none";
+    })
     function createImg(images){
         let newImages = [];
         while(newImages.length < dimension * dimension){

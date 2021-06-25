@@ -16,14 +16,22 @@
     display: flex;
     flex-direction: column;
     font-size: 26px;
-    width: 200px;
+    width: 150px;
+
+}
+
+#right-side{
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
 }
 
 #main{
     background: url(./images/backgroundimg.jpg) no-repeat center center/cover;
     background-size: cover;
     height: 100vh;
-    
 
 }
 
@@ -162,3 +170,47 @@ button{
     padding: 10px;
     border-radius: 14px;
 }
+
+#pause{
+    margin-top: 30px;
+    display: none;
+    cursor: pointer;
+}
+
+#pause-pop-up-content{
+   
+   background-color:lightgoldenrodyellow;
+    border-radius: 10px;
+    margin: 15% auto;
+    padding: 20px;
+    width: 30%;
+    box-shadow: 0 5px 8px 0 rgba(0,0,0,0.2), 0 7px 20px 0 rgba(0,0,0,0.2);
+    text-align: center;
+    width: 300px;
+    height: 300px;
+
+    
+}
+
+#pop-up-play{
+    font-size: 70px;
+     cursor: pointer;
+    margin-top: 40%;
+}
+
+
+#pause-pop-up{
+   display: none;
+    z-index: 1;
+  position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+
+
+
+
