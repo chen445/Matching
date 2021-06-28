@@ -1,5 +1,5 @@
 ## Introduction
-Matching Game is a classic elimination of the game which players must remove all the icons from the board. The board is N by N grid with different icons’ images. Players need to find icons with same pattern. After players click the two matching icons that have a path between them, icons will disappear from the board. The game will end when all icons disappear.
+Matching Game is a classic elimination of the game which players must remove all the images from the board. The board is N by N grid with different images. Players need to find images with same pattern. After players click the two matching images that have a path between them, images will disappear from the board. The game will end when all images disappear.
 
 Live Site: [Matching](https://chen445.github.io/Matching/)
 
