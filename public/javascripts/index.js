@@ -58,12 +58,20 @@ class SoundManager {
 
 document.addEventListener("DOMContentLoaded", () => {
     let soundManager = new SoundManager();
+  document.getElementById("instruction").addEventListener("click",(event)=>{
+    document.getElementById("instruction-pop-up").style.display = "block";
+  })
+  document.getElementById("close-instruction").addEventListener("click", (event)=>{
+    document.getElementById("instruction-pop-up").style.display = "none";
+  })
+
   const startGameButton = document.getElementById("start-game-btn");
 
   startGameButton.addEventListener("click", (event) => {
     soundManager.playClick();
     soundManager.playbackground();
     document.getElementById("welcome").style.display = "none";
+    document.getElementById("instruction").style.display ="none"
     startGame();
     document.getElementById("board").style.display = "flex";
     document.getElementById("score-board").style.display = "block";
@@ -92,6 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
     soundManager.playClick();
     soundManager.pauseBackground();
     document.getElementById("welcome").style.display = "block";
+    document.getElementById("instruction").style.display="block"
     document.getElementById("board").style.display = "none";
     document.getElementById("score-board").style.display = "none";
     document.getElementById("pop-up").style.display = "none";

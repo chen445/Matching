@@ -211,7 +211,98 @@ button{
    
 }
 
+#instruction-pop-up-content{
+   
+   background-color:lightgoldenrodyellow;
+    border-radius: 10px;
+    margin: 8% auto;
+    padding: 20px;
+    width: 30%;
+    box-shadow: 0 5px 8px 0 rgba(0,0,0,0.2), 0 7px 20px 0 rgba(0,0,0,0.2);
+    text-align: center;
+    width: 600px;
+    height: 600px;
+    
+}
+
+#pop-up-instruction{
+    font-size: 17px;
+    cursor: pointer;
+    line-height: 1.5;
+    text-align: left;
+
+}
+
+#pop-up-instruction h2{
+    font-size: 25px;
+    font-weight: 600;
+}
 
 
+#pop-up-instruction img{
+    width: 300px;
+}
+
+#instruction-pop-up{
+   display: none;
+    z-index: 1;
+  position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+   
+}
 
 
+#instruction{
+    text-align: center;
+        margin-left: 42px;
+}
+
+
+#instruction button{
+       text-align: center;
+    border: none;
+    padding: 10px;
+    border-radius: 14px;
+    font-weight: 600;
+    width: 167px;
+    height: 37px;
+    font-size: 16px;
+    opacity: 0.8;
+}
+
+
+#close-instruction {
+ background: #72AE72;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+
+.image {
+  position: relative;
+  width: 300px;
+}
+
+
+.description {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  color: black;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.image:hover .description {
+  visibility: visible;
+  opacity: 1;
+}
