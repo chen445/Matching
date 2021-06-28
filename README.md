@@ -29,8 +29,8 @@ To determine whether the path between two images, a variation of DFS (Depth Firs
 
 ### Invalid Path 
 
-<img src="https://github.com/chen445/Matching/blob/gh-pages/images/invalid%20move.png?raw=true" alt="invalid-path" width="500"/>
+<img src="https://github.com/chen445/Matching/blob/gh-pages/images/invalidMove.png?raw=true" alt="invalid-path" width="500"/>
 
 ### Valid Path
 
-<img src="https://github.com/chen445/Matching/blob/gh-pages/images/valid%20move.png?raw=true" alt="valid-path" width="500"/>
+<img src="https://github.com/chen445/Matching/blob/gh-pages/images/validMove.png?raw=true" alt="valid-path" width="500"/>
